@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Shifter · Stick Shift for OpenCode, Ollama &amp; Claude</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:ital,wght@0,500;0,700;1,700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <!-- ====================================================================
+         LEFT UNIT: THE CARBON-FIBER SHIFTER CONSOLE (1:1 WITH VIDEO UI)
+         ==================================================================== -->
+    <div class="shifter-chassis" id="card">
+      <!-- Top Carbon Bezel Titlebar -->
+      <div class="bezel-top">
+        <div class="brand-drag">
+          <span class="bezel-logo">MODEL SHIFTER</span>
+        </div>
+        <div class="bezel-controls">
+          <button class="mode-pill" id="btnMode" title="Click to switch between OpenCode Mode, Ollama Mode, and Claude Mode">
+            ⚡ OPENCODE
+          </button>
+          <button class="bezel-icon-btn" id="btnAutoKeys" title="Auto-Type '/model ...' into open Terminal window on shift">⌨</button>
+          <button class="bezel-icon-btn active" id="btnSound" title="Toggle Mechanical Shifter & Redline Audio FX">♪</button>
+          <button class="bezel-icon-btn active" id="btnPin" title="Always on Top (Pinned)">📌</button>
+          <button class="bezel-icon-btn" id="btnMin" title="Minimize">─</button>
+          <button class="bezel-icon-btn close" id="btnClose" title="Close">✕</button>
+        </div>
+      </div>
+
+      <!-- Recessed Glossy Black OLED Instrument Screen -->
+      <div class="oled-screen">
+        <!-- Upper Row: Analog Tachometer + Giant Amber Gear Readout -->
+        <div class="oled-upper">
+          <svg id="tach" viewBox="0 0 150 92" aria-hidden="true">
+            <path id="tachArc" d="" fill="none"></path>
+            <path id="tachRedline" d="" fill="none"></path>
+            <g id="tachTicks"></g>
+            <g id="tachLabels"></g>
+            <line id="needle" x1="75" y1="82" x2="75" y2="22"></line>
+            <circle cx="75" cy="82" r="5.5" class="hub"></circle>
+            <text x="75" y="63" class="tachUnit" id="tachUnitLabel">TOK/S ×10</text>
+          </svg>
+
+          <div class="oled-gear-display">
+            <div class="num" id="num">4</div>
+            <div class="mdl" id="mdl">NEMOTRON 3.5</div>
+          </div>
+        </div>
+
+        <!-- Middle Row: Session Target & 4 Square Amber Hardware Buttons (Exact Video Layout) -->
+        <div class="oled-mid-bar">
+          <div class="session-target" id="sessionTarget" title="Click to change working directory">
+            <span class="session-dot online" id="ollamaStatusDot"></span>
+            <span id="sessionLabel">gearshift:4.0 · opencode</span>
+          </div>
+          <div class="hw-btn-group">
+            <button class="hw-sq-btn" id="btnHwAttach" title="Toggle Live AI Chat &amp; Garage Drawer (&gt;)">&gt;</button>
+            <button class="hw-sq-btn" id="btnHwSync" title="Sync Gears to OpenCode &amp; Scan Ollama (↻)">↻</button>
+            <button class="hw-sq-btn" id="btnHwNewTab" title="Launch OpenCode Desktop synced to Active Gear (+)">+</button>
+            <button class="hw-sq-btn" id="btnHwStop" title="Shift to Neutral / Unload Model (×)">×</button>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Dispatched Command Confirmation Line -->
+        <div class="oled-cmd-row" id="cmdRow" title="Click to copy active command">
+          <span class="cmd-text" id="cmd">/model nemotron-3.5-lightning-free → OpenCode + Claude</span>
+          <span class="cmd-check">✓</span>
+        </div>
+      </div>
+
+      <!-- Recessed Dark Matte Shifter Well -->
+      <div class="shifter-well" id="shifter">
+        <!-- Top Engraved Gear Labels: 1, 3, 5 -->
+        <div class="engraved-row top-row">
+          <div class="lab" data-k="1" id="lab-1">
+            <b>1</b>
+            <i id="lbl-1">MIMO V2.6</i>
+          </div>
+          <div class="lab" data-k="3" id="lab-3">
+            <b>3</b>
+            <i id="lbl-3">BIG PICKLE</i>
+          </div>
+          <div class="lab" data-k="5" id="lab-5">
+            <b>5</b>
+            <i id="lbl-5">NEMO ULTRA</i>
+          </div>
+        </div>
+
+        <!-- Circular Brushed Aluminum Gate Plate + Black H-Slots + 3D Knob -->
+        <div class="gate-stage" id="gateStage">
+          <div class="plate">
+            <!-- Deep Black H-Pattern Cutout Slots -->
+            <div class="slot sh"></div>
+            <div class="slot sv v0"></div>
+            <div class="slot sv v1"></div>
+            <div class="slot sv v2"></div>
+          </div>
+
+          <!-- Draggable 3D Glossy Black Shift Knob with Chrome Collar -->
+          <div class="knob" id="knob" style="left:110px;top:172px" title="Drag knob through the H-gate or click any gear">
+            <div class="knob-cap">
+              <svg viewBox="0 0 40 46">
+                <g fill="#e4e7ee" font-size="7.8" font-weight="700" text-anchor="middle" font-family="'Space Grotesk', sans-serif" opacity=".92">
+                  <text x="8" y="9">1</text>
+                  <text x="20" y="9">3</text>
+                  <text x="32" y="9">5</text>
+                  <text x="8" y="44">2</text>
+                  <text x="20" y="44">4</text>
+                  <text x="32" y="44">R</text>
+                </g>
+                <g stroke="#d8dce6" stroke-width="1.9" stroke-linecap="round" opacity=".82">
+                  <line x1="8" y1="12" x2="8" y2="34"></line>
+                  <line x1="20" y1="12" x2="20" y2="34"></line>
+                  <line x1="32" y1="12" x2="32" y2="34"></line>
+                  <line x1="8" y1="23" x2="32" y2="23"></line>
+                </g>
+                <circle id="dot" cx="20" cy="33" r="3.1" fill="#ffb340"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Engraved Gear Labels: 2, 4, R -->
+        <div class="engraved-row bot-row">
+          <div class="lab" data-k="2" id="lab-2">
+            <b>2</b>
+            <i id="lbl-2">LING 3.1</i>
+          </div>
+          <div class="lab" data-k="4" id="lab-4">
+            <b>4</b>
+            <i id="lbl-4">NEMOTRON 3.5</i>
+          </div>
+          <div class="lab" data-k="R" id="lab-R">
+            <b>R</b>
+            <i id="lbl-R">LONGCAT 2.5</i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         RIGHT UNIT: EXPANDABLE AI CHAT & TERMINAL GARAGE
+         ==================================================================== -->
+    <div class="garage-drawer" id="garageDrawer">
+      <div class="garage-header">
+        <div class="garage-tabs" id="garageTabs">
+          <button class="g-tab" data-tab="1"><span class="warm-dot" id="warm-1"></span><b>1</b> <span id="tablbl-1">MIMO V2.6</span></button>
+          <button class="g-tab" data-tab="2"><span class="warm-dot" id="warm-2"></span><b>2</b> <span id="tablbl-2">LING 3.1</span></button>
+          <button class="g-tab" data-tab="3"><span class="warm-dot" id="warm-3"></span><b>3</b> <span id="tablbl-3">BIG PICKLE</span></button>
+          <button class="g-tab active" data-tab="4"><span class="warm-dot" id="warm-4"></span><b>4</b> <span id="tablbl-4">NEMOTRON 3.5</span></button>
+          <button class="g-tab" data-tab="5"><span class="warm-dot" id="warm-5"></span><b>5</b> <span id="tablbl-5">NEMO ULTRA</span></button>
+          <button class="g-tab" data-tab="R"><span class="warm-dot" id="warm-R"></span><b>R</b> <span id="tablbl-R">LONGCAT 2.5</span></button>
+          <button class="g-tab cfg-tab" data-tab="CFG" title="Configure Models &amp; Gear Mappings">⚙ Models</button>
+        </div>
+      </div>
+
+      <!-- Active Gear Session Pane -->
+      <div class="garage-body" id="terminalPane">
+        <div class="garage-toolbar">
+          <div class="gt-info">
+            <div class="gt-badge-row">
+              <span class="gt-badge" id="gtBadge">GEAR 4 · NEMOTRON 3.5</span>
+              <span class="proxy-pill" id="proxyPill" title="Live OpenCode Plugin &amp; Port 11435 Router Active!">
+                Live Sync: ON
+              </span>
+            </div>
+            <span class="gt-desc" id="gtDesc">4th Gear · Heavy multi-file architecture &amp; debugging</span>
+          </div>
+          <div class="gt-actions">
+            <div class="submode-toggle">
+              <button class="sm-btn active" id="btnSubChat" title="Chat directly with this gear's AI model">💬 AI Chat</button>
+              <button class="sm-btn" id="btnSubShell" title="Interactive PowerShell session for this gear">&gt;_ Shell</button>
+            </div>
+            <button class="gt-btn primary" id="btnLaunchAgent" title="Open OpenCode Desktop synced to this gear">
+              ▶ OpenCode App
+            </button>
+            <button class="gt-btn" id="btnOpenWT" title="Open/focus this gear in native Windows Terminal (wt.exe)">
+              🪟 WT Tab
+            </button>
+            <button class="gt-btn" id="btnClearTerm" title="Clear output">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="terminal-output" id="terminalOutput"></div>
+
+        <form class="terminal-input-row" id="terminalForm">
+          <span class="prompt-chevron" id="promptChevron">G4❯</span>
+          <input
+            type="text"
+            id="terminalInput"
+            placeholder="Ask this gear's AI model anything (e.g. 'can you see this?' or 'what model are you?')..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="submit" class="send-btn" id="sendBtn">SEND ↵</button>
+        </form>
+      </div>
+
+      <!-- Model & Gear Configuration Pane -->
+      <div class="garage-body hidden" id="configPane">
+        <div class="cfg-header">
+          <div>
+            <h3>OpenCode, Ollama &amp; Claude Gear Transmission Mapping</h3>
+            <p id="ollamaDiscoverStatus">Live OpenCode Plugin active · Checking local Ollama daemon...</p>
+          </div>
+          <div class="cfg-actions">
+            <button class="gt-btn" id="btnAutoMapOllama" title="Automatically detect your installed Ollama models and assign them to Gears 1-5">
+              🦙 Auto-Map Local Ollama
+            </button>
+            <button class="gt-btn" id="btnResetCfg">Reset</button>
+            <button class="gt-btn primary" id="btnSaveCfg">💾 Save</button>
+          </div>
+        </div>
+
+        <div class="proxy-banner">
+          <b>Live OpenCode Plugin + Port 11435 Router:</b>
+          Shifting the physical stick lever automatically updates your OpenCode Desktop active model via our live plugin (<code>~/.config/opencode/plugins/model-shift.mjs</code>) AND routes Ollama requests on <code>http://127.0.0.1:11435</code>!
+        </div>
+
+        <div class="cfg-grid" id="cfgGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

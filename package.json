@@ -1,0 +1,22 @@
+{
+  "name": "model-shifter",
+  "version": "1.0.0",
+  "description": "Model Shifter - A 6-speed gated stick-shift desktop widget for OpenCode, Ollama & Claude Code on Windows",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "web": "node server.js"
+  },
+  "keywords": [
+    "opencode",
+    "ollama",
+    "claude-code",
+    "model-shifter",
+    "shifter",
+    "ai-coding"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.5.1"
+  }
+}

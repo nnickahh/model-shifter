@@ -1,0 +1,976 @@
+:root {
+  --amber: #ffb340;
+  --amber-bright: #ffd27d;
+  --amber-dim: #b87b20;
+  --amber-glow: rgba(255, 179, 64, 0.65);
+  --ink: #f0f2f7;
+  --dim: #8e93a0;
+  --nc: #ffb340;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090a0e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b2f3a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--amber-dim);
+}
+
+.app-shell {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  gap: 10px;
+}
+
+/* ============================================================================
+   LEFT UNIT: CARBON-FIBER / KNURLED HARDWARE CHASSIS (1:1 WITH VIDEO)
+   ============================================================================ */
+.shifter-chassis {
+  position: relative;
+  width: 332px;
+  flex: none;
+  border-radius: 22px;
+  padding: 12px 14px 14px;
+  /* Authentic carbon-fiber / knurled micro-grid weave from the reel */
+  background-color: #1c1d22;
+  background-image:
+    radial-gradient(#2c2e36 1.2px, transparent 1.2px),
+    radial-gradient(#121317 1.2px, #1c1d22 1.2px);
+  background-size: 6px 6px;
+  background-position: 0 0, 3px 3px;
+  border: 1.5px solid #3a3d46;
+  box-shadow:
+    0 26px 65px rgba(0, 0, 0, 0.9),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 2;
+}
+
+body.redline .shifter-chassis {
+  animation: shake 0.42s ease-in-out;
+  border-color: rgba(255, 95, 65, 0.7);
+}
+
+@keyframes shake {
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-2px, -1px); }
+  80% { transform: translate(2px, 1px); }
+}
+
+/* TOP BEZEL HEADER */
+.bezel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.brand-drag {
+  -webkit-app-region: drag;
+  flex: 1;
+  padding: 3px 0;
+  cursor: grab;
+}
+
+.bezel-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 3.4px;
+  color: #cfd3dc;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.bezel-controls {
+  -webkit-app-region: no-drag;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mode-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: rgba(10, 11, 14, 0.85);
+  border: 1px solid rgba(255, 179, 64, 0.45);
+  color: var(--amber);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mode-pill:hover {
+  background: rgba(255, 179, 64, 0.16);
+  border-color: var(--amber);
+}
+
+.bezel-icon-btn {
+  width: 21px;
+  height: 21px;
+  border-radius: 5px;
+  background: rgba(10, 11, 14, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #7d828f;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.bezel-icon-btn:hover {
+  color: var(--ink);
+  border-color: rgba(255, 179, 64, 0.5);
+}
+
+.bezel-icon-btn.active {
+  color: var(--amber);
+  border-color: rgba(255, 179, 64, 0.45);
+  text-shadow: 0 0 8px var(--amber-glow);
+}
+
+.bezel-icon-btn.close:hover {
+  background: rgba(230, 65, 61, 0.25);
+  border-color: #ff6b68;
+  color: #ff8b88;
+}
+
+/* ============================================================================
+   RECESSED GLOSSY BLACK OLED INSTRUMENT SCREEN (TOP PANEL IN VIDEO)
+   ============================================================================ */
+.oled-screen {
+  width: 100%;
+  background: radial-gradient(circle at 65% 32%, rgba(255, 165, 35, 0.08), transparent 62%), #040406;
+  border-radius: 12px;
+  border: 1.5px solid #484b54;
+  box-shadow:
+    inset 0 3px 16px rgba(0, 0, 0, 0.95),
+    0 1px 0 rgba(255, 255, 255, 0.12);
+  padding: 10px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.oled-upper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-bottom: 2px;
+}
+
+#tach {
+  width: 132px;
+  height: 78px;
+  flex: none;
+}
+
+#tachArc {
+  stroke: #343740;
+  stroke-width: 5.2;
+  stroke-linecap: round;
+}
+
+#tachRedline {
+  stroke: #e83c38;
+  stroke-width: 5.2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(232, 60, 56, 0.65));
+}
+
+#tachTicks line {
+  stroke: #d4d7df;
+  stroke-width: 1.5;
+}
+
+#tachLabels text {
+  fill: #a5a9b4;
+  font-size: 8.2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+#needle {
+  stroke: #ff9c2a;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgba(255, 156, 42, 0.85));
+  transform-origin: 75px 82px;
+}
+
+.hub {
+  fill: #1b1c20;
+  stroke: #686c77;
+  stroke-width: 1.5;
+}
+
+.tachUnit {
+  fill: #7d6840;
+  font-size: 6.3px;
+  font-family: 'JetBrains Mono', monospace;
+  text-anchor: middle;
+  letter-spacing: 0.5px;
+}
+
+.oled-gear-display {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--amber-bright);
+  text-shadow:
+    0 0 10px rgba(255, 185, 70, 0.85),
+    0 0 26px rgba(255, 155, 30, 0.6);
+  line-height: 0.96;
+}
+
+.num.pop {
+  animation: pop 0.26s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pop {
+  40% { transform: scale(1.22); }
+}
+
+.mdl {
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  color: var(--amber);
+  text-shadow: 0 0 10px rgba(255, 179, 64, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* MIDDLE ROW IN OLED: SESSION TARGET + 4 AMBER SQUARE BUTTONS */
+.oled-mid-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 179, 64, 0.14);
+}
+
+.session-target {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--amber);
+  text-shadow: 0 0 8px rgba(255, 179, 64, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.session-target:hover {
+  color: var(--amber-bright);
+}
+
+.session-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 6px var(--amber);
+  flex: none;
+}
+
+.session-dot.online {
+  background: #65f099;
+  box-shadow: 0 0 6px #65f099;
+}
+
+.hw-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.hw-sq-btn {
+  width: 21px;
+  height: 20px;
+  border-radius: 4px;
+  background: rgba(255, 179, 64, 0.08);
+  border: 1px solid rgba(255, 179, 64, 0.52);
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.hw-sq-btn:hover,
+.hw-sq-btn.active {
+  background: rgba(255, 179, 64, 0.25);
+  border-color: var(--amber-bright);
+  color: var(--amber-bright);
+  box-shadow: 0 0 10px rgba(255, 179, 64, 0.35);
+}
+
+/* BOTTOM ROW IN OLED: COMMAND CONFIRMATION LINE */
+.oled-cmd-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-top: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--amber-dim);
+  cursor: pointer;
+}
+
+.oled-cmd-row:hover {
+  color: var(--amber);
+}
+
+.cmd-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cmd-check {
+  color: var(--amber);
+  font-weight: 700;
+  flex: none;
+}
+
+/* ============================================================================
+   RECESSED MATTE SHIFTER WELL & BRUSHED ALUMINUM H-GATE (BOTTOM HALF IN VIDEO)
+   ============================================================================ */
+.shifter-well {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  background: linear-gradient(180deg, #16181e 0%, #101217 100%);
+  border-radius: 16px;
+  border: 1.5px solid #2b2e37;
+  box-shadow:
+    inset 0 4px 14px rgba(0, 0, 0, 0.85),
+    0 1px 0 rgba(255, 255, 255, 0.08);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.engraved-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  z-index: 3;
+}
+
+.lab {
+  cursor: pointer;
+  padding: 2px 2px;
+  border-radius: 6px;
+  transition: transform 0.14s, opacity 0.14s;
+}
+
+.lab:hover {
+  transform: translateY(-1px);
+}
+
+.lab b {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #e2e5ee;
+  line-height: 1.05;
+  transition: color 0.15s, text-shadow 0.15s;
+}
+
+.lab i {
+  display: block;
+  font-style: normal;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: #8d929f;
+  text-transform: uppercase;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s;
+}
+
+.lab.active-gear b {
+  color: var(--amber-bright);
+  text-shadow: 0 0 12px rgba(255, 179, 64, 0.7);
+}
+
+.lab.active-gear i {
+  color: var(--amber);
+}
+
+/* CIRCULAR BRUSHED ALUMINUM GATE STAGE */
+.gate-stage {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plate {
+  position: relative;
+  width: 204px;
+  height: 204px;
+  border-radius: 50%;
+  /* Bright brushed-aluminum metallic finish matching the video */
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.75), transparent 48%),
+    conic-gradient(
+      from 205deg,
+      #d0d4dc,
+      #9ea3ad 14%,
+      #eef0f5 27%,
+      #8b909a 44%,
+      #dfe2e9 60%,
+      #969ba5 76%,
+      #e9ecf2 90%,
+      #d0d4dc
+    );
+  border: 2px solid #595d67;
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.85),
+    inset 0 2px 4px rgba(255, 255, 255, 0.9),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+/* BOLD DEEP-BLACK H-PATTERN SLOTS INSIDE THE ALUMINUM CIRCLE */
+.slot {
+  position: absolute;
+  background: #07080b;
+  border-radius: 11px;
+  box-shadow:
+    inset 0 4px 8px rgba(0, 0, 0, 0.98),
+    0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* Plate is 204x204. Center is 102. Columns at x=40, 102, 164 (relative to 220x220 stage: 48, 110, 172) */
+.sh {
+  left: 30px;
+  top: 90px;
+  width: 144px;
+  height: 24px;
+}
+
+.sv {
+  top: 28px;
+  width: 24px;
+  height: 148px;
+}
+
+.v0 { left: 28px; }
+.v1 { left: 90px; }
+.v2 { left: 152px; }
+
+/* 3D GLOSSY BLACK DOMED SHIFT KNOB WITH CHROME COLLAR RING */
+.knob {
+  position: absolute;
+  width: 78px;
+  height: 78px;
+  margin: -39px 0 0 -39px;
+  border-radius: 50%;
+  /* Outer metallic chrome collar ring */
+  padding: 5px;
+  background: linear-gradient(145deg, #e6e9f0, #686d78 52%, #b8bcc6);
+  box-shadow:
+    0 16px 28px rgba(0, 0, 0, 0.82),
+    0 4px 8px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  z-index: 6;
+  transition:
+    left 0.38s cubic-bezier(0.3, 1.55, 0.5, 1),
+    top 0.38s cubic-bezier(0.3, 1.55, 0.5, 1);
+  cursor: grab;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.knob:active {
+  cursor: grabbing;
+}
+
+.knob-cap {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.08) 32%, transparent 52%),
+    radial-gradient(circle at 50% 52%, #26282e, #0e1014 70%, #050608);
+  box-shadow:
+    inset 0 -6px 12px rgba(0, 0, 0, 0.9),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.knob svg {
+  width: 38px;
+  height: 44px;
+  pointer-events: none;
+}
+
+/* SPARK PARTICLES */
+.spark {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  z-index: 99;
+  pointer-events: none;
+  animation: spark 0.75s cubic-bezier(0.2, 0.7, 0.4, 1) forwards;
+}
+
+@keyframes spark {
+  to {
+    transform: translate(var(--sx), var(--sy)) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   RIGHT UNIT: EXPANDABLE OLLAMA CHAT & TERMINAL GARAGE DRAWER
+   ============================================================================ */
+.garage-drawer {
+  flex: 1;
+  min-width: 0;
+  border-radius: 22px;
+  background: linear-gradient(165deg, #16181f, #0d0e13);
+  border: 1.5px solid #343741;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.88);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body.garage-open .garage-drawer {
+  display: flex;
+}
+
+.garage-header {
+  padding: 10px 12px 0;
+  background: #090a0e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.garage-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.g-tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--dim);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 7px;
+  padding: 5px 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.g-tab:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.g-tab.active {
+  color: var(--amber-bright);
+  background: rgba(255, 179, 64, 0.14);
+  border-color: rgba(255, 179, 64, 0.55);
+}
+
+.g-tab.cfg-tab {
+  margin-left: auto;
+}
+
+.warm-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3a3d46;
+}
+
+.warm-dot.live {
+  background: var(--amber);
+  box-shadow: 0 0 6px var(--amber);
+}
+
+.garage-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  gap: 8px;
+}
+
+.garage-body.hidden {
+  display: none;
+}
+
+.garage-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gt-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gt-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.proxy-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: #65f099;
+  background: rgba(101, 240, 153, 0.1);
+  border: 1px solid rgba(101, 240, 153, 0.35);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.gt-desc {
+  font-size: 10.5px;
+  color: var(--dim);
+}
+
+.gt-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.submode-toggle {
+  display: inline-flex;
+  background: #08090d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.sm-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 4px 8px;
+  background: transparent;
+  color: var(--dim);
+  border: none;
+  cursor: pointer;
+}
+
+.sm-btn.active {
+  background: rgba(255, 179, 64, 0.2);
+  color: var(--amber-bright);
+}
+
+.gt-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 8px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gt-btn:hover {
+  border-color: rgba(255, 179, 64, 0.45);
+  background: rgba(255, 179, 64, 0.12);
+}
+
+.gt-btn.primary {
+  background: linear-gradient(180deg, #ffc873, #ff9c2b);
+  color: #221503;
+  border: none;
+  font-weight: 700;
+}
+
+.terminal-output {
+  flex: 1;
+  min-height: 0;
+  background: #050609;
+  border: 1px solid #1e2129;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.52;
+  color: #d5d8e0;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+}
+
+.terminal-output .log-system {
+  color: var(--amber);
+}
+
+.terminal-output .log-user {
+  color: #7cc4e8;
+  font-weight: 600;
+}
+
+.terminal-output .log-ai {
+  color: #e9ecf4;
+}
+
+.terminal-output .log-stderr {
+  color: #ff8e8b;
+}
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #07090e;
+  border: 1px solid #262934;
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+.prompt-chevron {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+#terminalInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  user-select: text;
+}
+
+.send-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 179, 64, 0.45);
+  background: rgba(255, 179, 64, 0.15);
+  color: var(--amber);
+  cursor: pointer;
+}
+
+/* CONFIG PANE */
+.cfg-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.cfg-header h3 {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cfg-header p {
+  font-size: 10.5px;
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cfg-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.proxy-banner {
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: #b7bcc8;
+  background: rgba(255, 179, 64, 0.07);
+  border: 1px dashed rgba(255, 179, 64, 0.35);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.proxy-banner b {
+  color: var(--amber);
+}
+
+.proxy-banner code {
+  font-family: 'JetBrains Mono', monospace;
+  color: #65f099;
+}
+
+.cfg-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+.cfg-card {
+  background: #080a0f;
+  border: 1px solid #1e212a;
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cfg-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.cfg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cfg-field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.cfg-field input,
+.cfg-field select {
+  background: #0d1017;
+  border: 1px solid #262a36;
+  border-radius: 5px;
+  padding: 4px 7px;
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  user-select: text;
+}
